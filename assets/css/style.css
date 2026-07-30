@@ -1,0 +1,802 @@
+/* ==========================================================================
+   Вера Иофе — сайт пианистки и педагога
+   Дизайн-система: тёплый минимализм, крупная типографика, фото с эффектом
+   плавного масштабирования при прокрутке.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --color-bg: #f2f3f3;
+  --color-bg-alt: #e7e8e9;
+  --color-ink: #15171b;
+  --color-ink-soft: #565a5f;
+  --color-line: #d3d5d7;
+  --color-accent: #7a1f2c;
+  --color-gold: #96773e;
+  --color-white: #ffffff;
+
+  --font-display: 'Playfair Display', 'Georgia', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --container: 1180px;
+  --gap: clamp(1.25rem, 3vw, 2.5rem);
+  --section-pad: clamp(4rem, 10vw, 8rem);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+p { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 3rem);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 1.1rem;
+}
+
+.section {
+  padding: var(--section-pad) 0;
+}
+
+.section--alt { background: var(--color-bg-alt); }
+
+.section-head {
+  max-width: 640px;
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.section-head h1,
+.section-head h2 {
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  margin-bottom: clamp(0.9rem, 2vw, 1.3rem);
+}
+
+.lede {
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  color: var(--color-ink-soft);
+  max-width: 60ch;
+}
+
+.hr {
+  border: none;
+  border-top: 1px solid var(--color-line);
+  margin: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.95rem 1.9rem;
+  border: 1px solid var(--color-ink);
+  transition: background 0.35s var(--ease), color 0.35s var(--ease);
+}
+
+.btn:hover { background: var(--color-ink); color: var(--color-bg); }
+
+.btn--accent {
+  border-color: var(--color-accent);
+  color: var(--color-white);
+  background: var(--color-accent);
+}
+
+.btn--accent:hover {
+  background: transparent;
+  color: var(--color-accent);
+}
+
+/* ---------------------------- Header / Nav ------------------------------ */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem clamp(1.25rem, 5vw, 3rem);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: transform 0.45s var(--ease), background 0.35s ease, border-color 0.35s ease;
+}
+
+.site-header.is-hidden { transform: translateY(-100%); }
+
+/* Every page opens with a full-bleed hero photo: the header stays
+   transparent over it and only picks up a solid (footer-dark) background
+   once the user scrolls past the hero, or while the mobile menu is open. */
+.site-header.is-scrolled,
+.site-header.force-solid {
+  background: var(--color-ink);
+  backdrop-filter: blur(10px);
+  border-bottom-color: rgba(247, 244, 238, 0.12);
+}
+
+/* Contacts and Recordings have no hero photo, so there's nothing to be
+   transparent over — keep the header solid at all times instead of
+   washing out (white nav text) against the plain light page background. */
+body[data-page="contacts"] .site-header,
+body[data-page="recordings"] .site-header {
+  background: var(--color-ink);
+  backdrop-filter: blur(10px);
+  border-bottom-color: rgba(247, 244, 238, 0.12);
+}
+
+/* Concerts and Pedagogy have very bright hero photos — blur what's behind
+   the header instead of tinting it dark, so text stays legible without
+   reading as a solid stripe. Applies at every width. */
+body[data-page="concerts"] .site-header:not(.is-scrolled),
+body[data-page="pedagogy"] .site-header:not(.is-scrolled) {
+  background: rgba(15, 17, 20, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* Trio site's homepage portrait crop (below 800px) needs the same
+   treatment; its landscape crop on wider screens doesn't. */
+@media (max-width: 799px) {
+  body[data-site="trio"][data-page="index"] .site-header:not(.is-scrolled) {
+    background: rgba(15, 17, 20, 0.1);
+    backdrop-filter: blur(10px);
+  }
+}
+
+body[data-page="concerts"] .hero-media img { object-position: center center; }
+
+@media (min-width: 800px) {
+  body[data-page="concerts"] .hero-media img { object-position: 32% center; }
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  color: var(--color-white);
+  transition: opacity 0.35s ease;
+}
+
+/* On each site's own homepage, the hero already spells out the name in
+   huge type right below — showing it again in the header at the same
+   time is a pure duplicate. Hide the header wordmark only while at the
+   very top; once scrolled past the hero it reappears for orientation. */
+body[data-page="index"] .site-header:not(.is-scrolled) .brand {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.brand.is-long {
+  font-size: clamp(1.05rem, 2.1vw, 1.5rem);
+  max-width: 380px;
+}
+
+.brand small {
+  display: block;
+  white-space: normal;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(247, 244, 238, 0.68);
+  margin-top: 0.15rem;
+}
+
+.nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.2rem, 2.4vw, 2.4rem);
+}
+
+.nav-desktop a {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  position: relative;
+  padding-bottom: 4px;
+  color: var(--color-white);
+}
+
+.nav-desktop a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s var(--ease);
+}
+
+.nav-desktop a:hover::after,
+.nav-desktop a.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.nav-desktop a.is-active { color: var(--color-gold); }
+
+.lang-switch {
+  display: flex;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-white);
+}
+
+.lang-switch a {
+  opacity: 0.55;
+  padding: 0.2rem 0.35rem;
+}
+
+.lang-switch a.is-active { opacity: 1; color: var(--color-gold); }
+
+.nav-toggle {
+  display: none;
+  width: 34px; height: 24px;
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav-toggle span,
+.nav-toggle span::before,
+.nav-toggle span::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--color-white);
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.nav-toggle span { top: 50%; }
+.nav-toggle span::before { top: -8px; }
+.nav-toggle span::after { top: 8px; }
+
+.nav-toggle.is-open span { background: transparent; }
+.nav-toggle.is-open span::before { top: 0; transform: rotate(45deg); }
+.nav-toggle.is-open span::after { top: 0; transform: rotate(-45deg); }
+
+.nav-mobile {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.6rem;
+  padding: 2rem clamp(1.5rem, 8vw, 4rem);
+  padding-top: max(2rem, 6rem);
+  overflow-y: auto;
+  transform: translateY(-8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease), visibility 0.35s;
+}
+
+.nav-mobile.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-mobile a {
+  font-family: var(--font-display);
+  font-size: 2rem;
+}
+
+/* Phone in landscape: little vertical room — shrink the menu so it never
+   has to fight the fixed header for space. */
+@media (max-height: 520px) {
+  .nav-mobile {
+    justify-content: flex-start;
+    gap: 0.9rem;
+    padding-top: max(1.2rem, 5.5rem);
+    padding-bottom: 1.5rem;
+  }
+
+  .nav-mobile a { font-size: 1.4rem; }
+}
+
+/* ------------------------------- Hero ----------------------------------- */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-media img,
+.hero-media .ph {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  transform: scale(1);
+  will-change: transform;
+}
+
+.hero-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15,17,20,0.08) 0%, rgba(15,17,20,0.58) 100%);
+}
+
+/* Bio: on mobile the hero uses a different (wide, landscape) photo than
+   desktop, so it needs its own crop — positioned low enough that the
+   transparent header/nav doesn't sit over her face, high enough that
+   the piano is still in frame. */
+.bio-hero-swap { object-position: center 30%; }
+
+@media (min-width: 800px) {
+  .bio-hero-swap { object-position: center 40%; }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: var(--color-white);
+  padding: 0 clamp(1.25rem, 5vw, 3rem) clamp(3rem, 8vw, 5rem);
+  max-width: 780px;
+}
+
+.hero-content .eyebrow { color: var(--color-gold); }
+
+.hero-content h1 {
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  font-style: normal;
+}
+
+/* Only Vera's own name on the homepage gets the italic treatment — a
+   personal signature, not a page title. Every other heading stays
+   upright Playfair Display. */
+.hero-content h1.is-name { font-style: italic; }
+
+/* Every hero title slides in and fades up on load — otherwise these
+   titles just appear instantly with no motion at all. */
+@keyframes hero-title-in {
+  from { opacity: 0; transform: translateX(-6rem); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.hero-content h1.is-name,
+body[data-page="concerts"] .hero-content h1,
+body[data-page="pedagogy"] .hero-content h1,
+body[data-page="bio"] .hero-content h1,
+body[data-site="trio"][data-page="index"] .hero-content h1 {
+  animation: hero-title-in 1.1s var(--ease) both;
+}
+
+body[data-page="concerts"] .hero-content h1,
+body[data-page="pedagogy"] .hero-content h1 {
+  font-size: clamp(3.2rem, 8.5vw, 6rem);
+  line-height: 1.2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-content h1.is-name,
+  body[data-page="concerts"] .hero-content h1,
+  body[data-page="pedagogy"] .hero-content h1,
+  body[data-page="bio"] .hero-content h1,
+  body[data-site="trio"][data-page="index"] .hero-content h1 {
+    animation: none;
+  }
+}
+
+/* Homepage name: stack "Вера" / "Иофе" on two lines and go noticeably
+   bigger once there's enough width for it to read as a deliberate
+   two-line lockup rather than a cramped wrap. */
+@media (min-width: 901px) {
+  .hero-content h1.is-name { font-size: clamp(4.5rem, 9vw, 7.5rem); margin-left: 5vw; }
+  .hero-content h1.is-name .line { display: block; }
+
+  /* Same 5% shift on the Concerts and Pedagogy hero titles, and on the
+     trio site's own homepage title. */
+  body[data-page="concerts"] .hero-content h1,
+  body[data-page="pedagogy"] .hero-content h1,
+  body[data-site="trio"][data-page="index"] .hero-content h1 {
+    margin-left: 5vw;
+  }
+
+  /* Bio hero title moves to the top-right corner instead of the usual
+     bottom-left. Its offset from the top and from the right both equal
+     the hero-content's own left padding plus the 5vw shift used for the
+     homepage name above — i.e. "5% more than the original" inset. */
+  body[data-page="bio"] .hero-content {
+    position: absolute;
+    top: calc(clamp(1.25rem, 5vw, 3rem) + 5vw);
+    right: calc(clamp(1.25rem, 5vw, 3rem) + 5vw);
+    left: auto;
+    bottom: auto;
+    padding: 0;
+  }
+
+  /* Both sites share one header thickness — otherwise the trio site's
+     two-line wordmark makes its header taller than Vera's, and the nav
+     row sits at a different height between the two sites. 6.4rem is the
+     trio brand's own natural height at its capped size (2 lines ×
+     1.5rem × 1.2 line-height), so this doesn't change the trio site at
+     its widest, only stretches Vera's shorter single-line header to
+     match it. */
+  .site-header { min-height: 6.4rem; }
+
+  /* Bigger wordmark in the top nav — sized to the largest that still
+     fits on one line at >=1152px (where there's slack and the nav row
+     keeps its exact width). The header's own thickness above would
+     allow up to 3rem vertically, but the nav row is the tighter
+     constraint. Below 1152px it wraps to two lines — same as the old,
+     smaller wordmark already did at those widths — so the nav row never
+     has to give up space either way. */
+  .brand { font-size: 2.5rem; }
+}
+
+/* Long titles get a wider content column so a big desktop viewport can
+   render them large on two lines; only small screens actually need the
+   font to shrink to avoid a third line. */
+.hero-content.is-wide { max-width: 1040px; }
+
+.hero-content h1.is-long {
+  font-size: clamp(1.7rem, 5.2vw, 4.1rem);
+  /* Playfair Display's regular weight reads thin across a long two-line
+     headline — use the same 500 weight as every other hero title
+     instead of matching the lighter nav wordmark. */
+  letter-spacing: 0.02em;
+}
+
+.hero-content .lede { color: rgba(255,255,255,0.86); margin-top: 1rem; }
+
+.scroll-cue {
+  position: absolute;
+  right: clamp(1.25rem, 5vw, 3rem);
+  bottom: clamp(1.5rem, 4vw, 2.5rem);
+  z-index: 2;
+  color: var(--color-white);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  opacity: 0.75;
+}
+
+.scroll-cue::after {
+  content: '';
+  width: 1px;
+  height: 40px;
+  background: rgba(255,255,255,0.6);
+}
+
+/* --------------------------- Reveal / zoom media ------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+
+.zoom-media {
+  overflow: hidden;
+  background: var(--color-bg-alt);
+}
+
+.zoom-media img,
+.zoom-media .ph {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.22);
+  transition: transform 1.4s var(--ease);
+  will-change: transform;
+}
+
+.zoom-media.in-view img,
+.zoom-media.in-view .ph {
+  transform: scale(1);
+}
+
+/* Contained variant: show the whole photo (no crop), sized down inside a
+   framed panel rather than filling the column edge-to-edge. */
+.zoom-media.is-contained {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.split .zoom-media.is-contained { aspect-ratio: auto; }
+
+.zoom-media.is-contained img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  transform: none;
+  transition: none;
+}
+
+/* On wide screens the contained photo sits next to a text column in a
+   .split grid — stretch it to match the text block's height instead of
+   floating at its own small intrinsic size. */
+@media (min-width: 901px) {
+  .split .zoom-media.is-contained { align-self: stretch; }
+  .split .zoom-media.is-contained img { height: 100%; }
+
+  /* Trio photo on the bio page: +20% wider than the default 50/50 split
+     (0.6 / 0.5 = 1.2), height follows via the stretch rule above. */
+  body[data-page="bio"] .section--alt .split { grid-template-columns: 3fr 2fr; }
+}
+
+/* Placeholder photo block (swap for <img> when real photos arrive) */
+.ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+  background: repeating-linear-gradient(135deg, #dcdee0, #dcdee0 2px, #e6e7e8 2px, #e6e7e8 22px);
+  color: var(--color-ink-soft);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+/* -------------------------------- Layout grids --------------------------- */
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.split .zoom-media { aspect-ratio: 4 / 5; }
+
+.split--reverse .zoom-media { order: 2; }
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 2rem;
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.stat-row .num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--color-accent);
+}
+
+.stat-row .label {
+  font-size: 0.78rem;
+  color: var(--color-ink-soft);
+  letter-spacing: 0.03em;
+}
+
+.trio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+.trio-card .zoom-media { aspect-ratio: 3 / 4; margin-bottom: 1.4rem; }
+.trio-card h3 { font-size: 1.5rem; }
+.trio-card .role {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0.3rem 0 0.8rem;
+}
+
+.pull-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  line-height: 1.4;
+  max-width: 780px;
+  color: var(--color-ink);
+}
+
+.pull-quote cite {
+  display: block;
+  margin-top: 1.2rem;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+/* ------------------------------- Concerts -------------------------------- */
+
+.concert-list { border-top: 1px solid var(--color-line); }
+
+.concert-row {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1.7rem 0;
+  border-bottom: 1px solid var(--color-line);
+  transition: padding-left 0.3s var(--ease);
+}
+
+.concert-row:hover { padding-left: 0.6rem; }
+
+.concert-date {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--color-accent);
+}
+
+.concert-date span {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+  margin-top: 0.2rem;
+}
+
+.concert-details h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.concert-details p { font-size: 0.92rem; color: var(--color-ink-soft); }
+
+.concert-tag {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--color-line);
+  white-space: nowrap;
+  align-self: center;
+}
+
+.concert-tag--past { opacity: 0.5; }
+
+/* -------------------------------- Footer --------------------------------- */
+
+.site-footer {
+  background: var(--color-ink);
+  color: rgba(247,244,238,0.75);
+  padding: clamp(3rem, 8vw, 5rem) 0 2rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(247,244,238,0.14);
+}
+
+.site-footer h4 {
+  color: var(--color-white);
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 0.88rem;
+  margin-bottom: 0.6rem;
+  opacity: 0.85;
+}
+
+.footer-col a:hover { opacity: 1; color: var(--color-gold); }
+
+.footer-col .foot-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 0.9rem;
+  display: block;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 1.6rem;
+  font-size: 0.75rem;
+  opacity: 0.55;
+}
+
+/* -------------------------------- Responsive ------------------------------ */
+
+@media (max-width: 900px) {
+  .nav-desktop { display: none; }
+  .nav-toggle { display: block; }
+  .brand { max-width: 70%; }
+  .split { grid-template-columns: 1fr; }
+  .split--reverse .zoom-media { order: 0; }
+  .trio-grid { grid-template-columns: 1fr; }
+  .trio-card--secondary { display: none; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .concert-row { grid-template-columns: 1fr; gap: 0.6rem; }
+  .concert-tag { justify-self: flex-start; }
+}
