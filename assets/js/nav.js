@@ -17,7 +17,7 @@
   var PAGE = document.body.getAttribute('data-page') || 'index';
 
   var NAV_ORDER = {
-    vera: ['index', 'bio', 'trio', 'concerts', 'pedagogy', 'contacts'],
+    vera: ['index', 'bio', 'concerts', 'pedagogy', 'contacts', 'trio'],
     trio: ['index', 'recordings', 'concerts', 'contacts', 'vera']
   }[SITE];
 
@@ -71,7 +71,7 @@
           recordings: 'Записи',
           concerts: 'Концерты',
           contacts: 'Контакты',
-          vera: '← Обратно к Вера Иофе'
+          vera: 'Вера Иофе'
         },
         footTitle: 'Трио имени С. Н. Кнушевицкого',
         footLede: 'Фортепианное трио, созданное на базе Московской государственной консерватории им. П. И. Чайковского.',
@@ -89,7 +89,7 @@
           recordings: 'Recordings',
           concerts: 'Concerts',
           contacts: 'Contact',
-          vera: '← Back to Vera Iofe'
+          vera: 'Vera Iofe'
         },
         footTitle: 'Knushevitsky Piano Trio',
         footLede: 'A piano trio formed at the Moscow Conservatory.',
