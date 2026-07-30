@@ -159,11 +159,13 @@ p:last-child { margin-bottom: 0; }
   border-bottom-color: rgba(247, 244, 238, 0.12);
 }
 
-/* Contacts and Recordings have no hero photo, so there's nothing to be
-   transparent over — keep the header solid at all times instead of
-   washing out (white nav text) against the plain light page background. */
+/* Contacts, Recordings and the concerts archive have no hero photo, so
+   there's nothing to be transparent over — keep the header solid at all
+   times instead of washing out (white nav text) against the plain light
+   page background. */
 body[data-page="contacts"] .site-header,
-body[data-page="recordings"] .site-header {
+body[data-page="recordings"] .site-header,
+body[data-page="concerts-archive"] .site-header {
   background: var(--color-ink);
   backdrop-filter: blur(10px);
   border-bottom-color: rgba(247, 244, 238, 0.12);
