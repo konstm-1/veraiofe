@@ -129,7 +129,7 @@
 
   var headerHTML =
     '<header class="site-header" id="siteHeader">' +
-      '<a href="' + href('index') + '" class="brand' + (SITE === 'trio' ? ' is-long' : '') + '">' + t.name + (t.tagline ? '<small>' + t.tagline + '</small>' : '') + '</a>' +
+      '<a href="' + href('index') + '" class="brand' + (SITE === 'trio' ? ' is-long' : '') + '"><img src="/images/favicon.svg" alt="" class="brand-emblem">' + t.name + (t.tagline ? '<small>' + t.tagline + '</small>' : '') + '</a>' +
       '<nav class="nav-desktop" aria-label="Главная навигация">' +
         navLinks(false) +
         '<div class="lang-switch">' +
