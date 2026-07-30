@@ -108,13 +108,14 @@
     var lang = forOtherLang ? (LANG === 'en' ? 'ru' : 'en') : LANG;
 
     if (SITE === 'vera') {
-      if (page === 'trio') return lang === 'en' ? '/knushevitsky/en/index.html' : '/knushevitsky/index.html';
+      if (page === 'trio') return lang === 'en' ? 'https://knushevitsky.veraiofe.ru/en/index.html' : 'https://knushevitsky.veraiofe.ru/index.html';
       var veraBase = lang === 'en' ? '/en/' : '/';
       return veraBase + page + '.html';
     }
 
-    // SITE === 'trio'
-    if (page === 'vera') return lang === 'en' ? '/en/index.html' : '/index.html';
+    // SITE === 'trio' — a genuinely separate domain/repo now, so the link
+    // back to Vera's own site has to be a full cross-origin URL too.
+    if (page === 'vera') return lang === 'en' ? 'https://veraiofe.ru/en/index.html' : 'https://veraiofe.ru/index.html';
     var trioBase = lang === 'en' ? 'en/' : '';
     return trioBase + page + '.html';
   }
