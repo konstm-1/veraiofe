@@ -404,6 +404,12 @@ body[data-page="concerts"] .hero-media img { object-position: center center; }
 
 .hero-content .eyebrow { color: var(--color-gold); }
 
+/* Vera's own homepage hero name sits bottom-right (past her face in the
+   photo) at every width, not just once there's room for the two-line
+   stacked lockup. */
+body[data-page="index"]:not([data-site="trio"]) .hero { justify-content: flex-end; }
+body[data-page="index"]:not([data-site="trio"]) .hero-content { text-align: right; }
+
 .hero-content h1 {
   font-size: clamp(2.6rem, 7vw, 5rem);
   font-style: normal;
@@ -451,11 +457,6 @@ body[data-page="pedagogy"] .hero-content h1 {
 @media (min-width: 901px) {
   .hero-content h1.is-name { font-size: clamp(4.5rem, 9vw, 7.5rem); margin-right: 5vw; }
   .hero-content h1.is-name .line { display: block; }
-
-  /* Move off the bottom-left corner (past her face in the photo) to the
-     bottom-right instead — Vera's own homepage only, not the trio site's. */
-  body[data-page="index"]:not([data-site="trio"]) .hero { justify-content: flex-end; }
-  body[data-page="index"]:not([data-site="trio"]) .hero-content { text-align: right; }
 
   /* Same 5% shift on the Concerts and Pedagogy hero titles, and on the
      trio site's own homepage title. */
