@@ -204,6 +204,12 @@ body[data-page="concerts"] .hero-media img { object-position: center center; }
   transition: opacity 0.35s ease;
 }
 
+.brand-logo {
+  height: 1.4em;
+  width: auto;
+  display: block;
+}
+
 .brand.is-long {
   font-size: clamp(1.05rem, 2.1vw, 1.5rem);
   max-width: 380px;
@@ -563,13 +569,13 @@ body[data-page="pedagogy"] .hero-content h1 {
   transform: scale(1);
 }
 
-/* Contained variant: show the whole photo (no crop), sized down inside a
-   framed panel rather than filling the column edge-to-edge. */
+/* Contained variant: show the whole photo (no crop, nobody in the group
+   gets cut off) but otherwise fill the column edge-to-edge like every
+   other photo on the page, instead of floating inside a padded frame. */
 .zoom-media.is-contained {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(1.5rem, 4vw, 2.5rem);
 }
 
 .split .zoom-media.is-contained { aspect-ratio: auto; }

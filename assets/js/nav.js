@@ -127,9 +127,13 @@
     }).join('');
   }
 
+  var brandContent = SITE === 'vera'
+    ? '<img src="/images/logo-white.png" alt="' + t.name + '" class="brand-logo">'
+    : t.name + (t.tagline ? '<small>' + t.tagline + '</small>' : '');
+
   var headerHTML =
     '<header class="site-header" id="siteHeader">' +
-      '<a href="' + href('index') + '" class="brand' + (SITE === 'trio' ? ' is-long' : '') + '">' + t.name + (t.tagline ? '<small>' + t.tagline + '</small>' : '') + '</a>' +
+      '<a href="' + href('index') + '" class="brand' + (SITE === 'trio' ? ' is-long' : '') + '">' + brandContent + '</a>' +
       '<nav class="nav-desktop" aria-label="Главная навигация">' +
         navLinks(false) +
         '<div class="lang-switch">' +
