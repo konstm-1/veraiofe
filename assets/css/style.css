@@ -202,16 +202,6 @@ body[data-page="concerts"] .hero-media img { object-position: center center; }
   line-height: 1.2;
   color: var(--color-white);
   transition: opacity 0.35s ease;
-  display: inline-flex;
-  align-items: center;
-}
-
-.brand-emblem {
-  width: 1.5em;
-  height: 1.5em;
-  margin-right: 0.5em;
-  border-radius: 3px;
-  flex-shrink: 0;
 }
 
 /* On each site's own homepage, the hero already spells out the name in
