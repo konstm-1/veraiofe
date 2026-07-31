@@ -310,7 +310,8 @@ body[data-page="concerts"] .hero-media img { object-position: center center; }
 .nav-mobile {
   position: fixed;
   inset: 0;
-  background: var(--color-bg);
+  background: var(--color-ink);
+  color: var(--color-white);
   z-index: 90;
   display: flex;
   flex-direction: column;
