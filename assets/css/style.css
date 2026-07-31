@@ -204,15 +204,6 @@ body[data-page="concerts"] .hero-media img { object-position: center center; }
   transition: opacity 0.35s ease;
 }
 
-/* On each site's own homepage, the hero already spells out the name in
-   huge type right below — showing it again in the header at the same
-   time is a pure duplicate. Hide the header wordmark only while at the
-   very top; once scrolled past the hero it reappears for orientation. */
-body[data-page="index"] .site-header:not(.is-scrolled) .brand {
-  opacity: 0;
-  pointer-events: none;
-}
-
 .brand.is-long {
   font-size: clamp(1.05rem, 2.1vw, 1.5rem);
   max-width: 380px;
@@ -456,9 +447,9 @@ body[data-page="pedagogy"] .hero-content h1 {
   .hero-content h1.is-name .line { display: block; }
 
   /* Move off the bottom-left corner (past her face in the photo) to the
-     bottom-right instead. */
-  body[data-page="index"] .hero { justify-content: flex-end; }
-  body[data-page="index"] .hero-content { text-align: right; }
+     bottom-right instead — Vera's own homepage only, not the trio site's. */
+  body[data-page="index"]:not([data-site="trio"]) .hero { justify-content: flex-end; }
+  body[data-page="index"]:not([data-site="trio"]) .hero-content { text-align: right; }
 
   /* Same 5% shift on the Concerts and Pedagogy hero titles, and on the
      trio site's own homepage title. */

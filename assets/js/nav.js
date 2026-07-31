@@ -17,7 +17,7 @@
   var PAGE = document.body.getAttribute('data-page') || 'index';
 
   var NAV_ORDER = {
-    vera: ['index', 'bio', 'trio', 'concerts', 'pedagogy', 'contacts'],
+    vera: ['index', 'bio', 'concerts', 'pedagogy', 'contacts', 'trio'],
     trio: ['index', 'recordings', 'concerts', 'contacts', 'vera']
   }[SITE];
 
