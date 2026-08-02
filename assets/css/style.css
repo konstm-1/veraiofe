@@ -870,6 +870,83 @@ body[data-page="pedagogy"] .hero-content h1 {
   .poster-card { width: 68vw; }
 }
 
+/* -------------------------------- Streaming grid --------------------------- */
+
+/* Four platform links as a flat 2x2 grid: a 1px gap filled with the line
+   color doubles as hairline dividers between cards, so there's no
+   border-per-row (and no doubled borders at the shared edges) — same
+   flat, no-shadow materiality as the rest of the site. */
+.stream-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--color-line);
+  border: 1px solid var(--color-line);
+}
+
+.stream-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: clamp(1.8rem, 3vw, 2.6rem);
+  background: var(--color-bg);
+  transition: background 0.35s var(--ease), padding-left 0.35s var(--ease);
+}
+
+.stream-card:hover { background: var(--color-bg-alt); padding-left: calc(clamp(1.8rem, 3vw, 2.6rem) + 0.4rem); }
+
+.stream-card h3 { font-size: 1.35rem; font-weight: 500; }
+
+.stream-card p { font-size: 0.88rem; color: var(--color-ink-soft); margin: 0; }
+
+.stream-link {
+  margin-top: auto;
+  padding-top: 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.35s var(--ease);
+}
+
+.stream-card:hover .stream-link { color: var(--color-accent); }
+
+/* Two icon marks, drawn with plain divs/borders rather than an SVG
+   library (this static site has no build step to install one from) —
+   a waveform for the audio platforms, a play triangle for YouTube. */
+.stream-icon { display: flex; align-items: flex-end; gap: 3px; height: 20px; }
+
+.stream-icon--wave i {
+  display: block;
+  width: 3px;
+  background: var(--color-ink);
+  transition: background 0.35s var(--ease);
+}
+
+.stream-icon--wave i:nth-child(1) { height: 40%; }
+.stream-icon--wave i:nth-child(2) { height: 100%; }
+.stream-icon--wave i:nth-child(3) { height: 65%; }
+.stream-icon--wave i:nth-child(4) { height: 85%; }
+
+.stream-card:hover .stream-icon--wave i { background: var(--color-accent); }
+
+.stream-icon--play { align-items: center; }
+
+.stream-icon--play i {
+  width: 0; height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 11px solid var(--color-ink);
+  transition: border-color 0.35s var(--ease);
+}
+
+.stream-card:hover .stream-icon--play i { border-left-color: var(--color-accent); }
+
+@media (max-width: 900px) {
+  .stream-grid { grid-template-columns: 1fr; }
+  .stream-card:hover { padding-left: clamp(1.8rem, 3vw, 2.6rem); }
+}
+
 /* -------------------------------- Footer --------------------------------- */
 
 .site-footer {
