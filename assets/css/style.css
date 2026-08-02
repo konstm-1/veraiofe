@@ -776,6 +776,95 @@ body[data-page="pedagogy"] .hero-content h1 {
 
 .concert-tag--past { opacity: 0.5; }
 
+/* ------------------------------ Poster carousel --------------------------- */
+
+.poster-carousel {
+  position: relative;
+}
+
+.poster-track {
+  display: flex;
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: clamp(1.25rem, 5vw, 3rem);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 0.5rem;
+  margin: 0;
+}
+
+.poster-track::-webkit-scrollbar { display: none; }
+
+.poster-card {
+  flex: 0 0 auto;
+  width: clamp(220px, 26vw, 300px);
+  scroll-snap-align: start;
+  margin: 0;
+}
+
+.poster-card img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border: 1px solid var(--color-line);
+  transition: transform 0.45s var(--ease);
+}
+
+.poster-card:hover img { transform: scale(1.02); }
+
+.poster-card figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-top: 0.9rem;
+}
+
+.poster-date {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--color-accent);
+}
+
+.poster-place {
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+}
+
+.poster-nav {
+  position: absolute;
+  top: calc((clamp(220px, 26vw, 300px) * 1.5) / 2);
+  transform: translateY(-50%);
+  width: 42px; height: 42px;
+  border: 1px solid var(--color-ink);
+  background: var(--color-bg);
+  cursor: pointer;
+  transition: background 0.35s var(--ease), color 0.35s var(--ease);
+}
+
+.poster-nav:hover { background: var(--color-ink); }
+
+.poster-nav span {
+  display: block;
+  width: 8px; height: 8px;
+  margin: 0 auto;
+  border-top: 1px solid var(--color-ink);
+  border-right: 1px solid var(--color-ink);
+  transition: border-color 0.35s var(--ease);
+}
+
+.poster-nav:hover span { border-color: var(--color-bg); }
+
+.poster-nav--prev { left: -21px; }
+.poster-nav--prev span { transform: rotate(-135deg) translate(1px, -1px); }
+.poster-nav--next { right: -21px; }
+.poster-nav--next span { transform: rotate(45deg) translate(-1px, 1px); }
+
+@media (max-width: 900px) {
+  .poster-nav { display: none; }
+  .poster-card { width: 68vw; }
+}
+
 /* -------------------------------- Footer --------------------------------- */
 
 .site-footer {

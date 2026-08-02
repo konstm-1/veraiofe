@@ -3,6 +3,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   initHeroScrollZoom();
+  initPosterCarousels();
 
   var observed = document.querySelectorAll('.reveal, .zoom-media');
   if ('IntersectionObserver' in window) {
@@ -52,4 +53,26 @@ function initHeroScrollZoom() {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
   update();
+}
+
+/* Prev/next buttons on a .poster-carousel just scroll its track by one
+   card's width — the track itself is a native scroll-snap row, so this
+   is purely a convenience for mouse/keyboard users (touch/trackpad
+   already scrolls it directly). */
+function initPosterCarousels() {
+  document.querySelectorAll('.poster-carousel').forEach(function (carousel) {
+    var track = carousel.querySelector('.poster-track');
+    var prev = carousel.querySelector('[data-poster-prev]');
+    var next = carousel.querySelector('[data-poster-next]');
+    if (!track || !(prev || next)) return;
+
+    function step(dir) {
+      var card = track.querySelector('.poster-card');
+      var amount = card ? card.getBoundingClientRect().width + 32 : track.clientWidth * 0.8;
+      track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+    }
+
+    if (prev) prev.addEventListener('click', function () { step(-1); });
+    if (next) next.addEventListener('click', function () { step(1); });
+  });
 }
