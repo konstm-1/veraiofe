@@ -601,6 +601,11 @@ body[data-page="pedagogy"] .hero-content h1 {
   /* Trio photo on the bio page: +20% wider than the default 50/50 split
      (0.6 / 0.5 = 1.2), height follows via the stretch rule above. */
   body[data-page="bio"] .section--alt .split { grid-template-columns: 3fr 2fr; }
+
+  /* Bio content is only inlined under the homepage hero on mobile — on
+     desktop the standalone Bio page (with its own hero photo) is still
+     the way in, reached via nav, so this duplicate block stays hidden. */
+  .mobile-bio { display: none; }
 }
 
 /* Placeholder photo block (swap for <img> when real photos arrive) */
@@ -805,4 +810,9 @@ body[data-page="pedagogy"] .hero-content h1 {
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   .concert-row { grid-template-columns: 1fr; gap: 0.6rem; }
   .concert-tag { justify-self: flex-start; }
+
+  /* On mobile the Bio page's own hero photo goes away entirely — its
+     content now lives inline on the homepage (.mobile-bio), reached
+     directly under the main hero rather than via a separate page/photo. */
+  body[data-page="bio"] .hero { display: none; }
 }

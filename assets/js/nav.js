@@ -20,6 +20,12 @@
     trio: ['index', 'recordings', 'concerts', 'contacts', 'vera']
   }[SITE];
 
+  // On Vera's site, Bio no longer has its own mobile page — its content
+  // lives inline on the homepage under the hero — so the mobile hamburger
+  // menu drops that entry. Desktop nav and the footer sitemap keep it,
+  // since bio.html is still the real standalone page there.
+  var MOBILE_NAV_ORDER = SITE === 'vera' ? NAV_ORDER.filter(function (p) { return p !== 'bio'; }) : NAV_ORDER;
+
   var T = {
     vera: {
       ru: {
@@ -119,8 +125,8 @@
     return trioBase + page + '.html';
   }
 
-  function navLinks(mobile) {
-    return NAV_ORDER.map(function (p) {
+  function navLinks(mobile, order) {
+    return (order || NAV_ORDER).map(function (p) {
       var active = p === PAGE ? ' is-active' : '';
       return '<a href="' + href(p) + '" class="' + (mobile ? '' : 'is-active-slot') + active + '">' + t.nav[p] + '</a>';
     }).join('');
@@ -144,7 +150,7 @@
       '<button class="nav-toggle" id="navToggle" aria-label="Меню"><span></span></button>' +
     '</header>' +
     '<div class="nav-mobile" id="navMobile">' +
-      navLinks(true) +
+      navLinks(true, MOBILE_NAV_ORDER) +
       '<div class="lang-switch" style="margin-top:1rem;font-size:0.9rem;">' +
         '<a href="' + href(PAGE, false) + '" class="' + (LANG === 'ru' ? 'is-active' : '') + '">RU</a>' +
         '<span>/</span>' +
