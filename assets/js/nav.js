@@ -1,6 +1,6 @@
 /* Общий хедer/футер, инжектируются на каждой странице.
    Два разных сайта используют этот файл, каждый в своём репозитории:
-   сайт Веры Иофе (veraiofe.ru) и сайт трио (knushevitsky.veraiofe.ru).
+   сайт Веры Иофе (veraiofe.ru) и сайт трио (knushevitsky.ru).
    Файл нужно вручную копировать между репозиториями при изменении.
    Сайт помечается атрибутом data-site на <body> ("trio" или отсутствует/
    что угодно ещё = сайт Веры), активная страница — атрибутом data-page,
@@ -82,7 +82,7 @@
         footLede: 'Фортепианное трио, созданное на базе Московской государственной консерватории им. П. И. Чайковского.',
         colNav: 'Разделы',
         colContact: 'Контакты',
-        email: 'info@veraiofe.ru',
+        email: 'info@knushevitsky.ru',
         place: '',
         rights: '© ' + new Date().getFullYear() + ' Трио имени С. Н. Кнушевицкого. Все права защищены.'
       },
@@ -100,7 +100,7 @@
         footLede: 'A piano trio formed at the Moscow Conservatory.',
         colNav: 'Sections',
         colContact: 'Contact',
-        email: 'info@veraiofe.ru',
+        email: 'info@knushevitsky.ru',
         place: '',
         rights: '© ' + new Date().getFullYear() + ' Knushevitsky Piano Trio. All rights reserved.'
       }
@@ -108,12 +108,13 @@
   };
 
   var t = T[SITE][LANG];
+  var menuLabel = LANG === 'en' ? 'Menu' : 'Меню';
 
   function href(page, forOtherLang) {
     var lang = forOtherLang ? (LANG === 'en' ? 'ru' : 'en') : LANG;
 
     if (SITE === 'vera') {
-      if (page === 'trio') return lang === 'en' ? 'https://knushevitsky.veraiofe.ru/en/index.html' : 'https://knushevitsky.veraiofe.ru/index.html';
+      if (page === 'trio') return lang === 'en' ? 'https://knushevitsky.ru/en/index.html' : 'https://knushevitsky.ru/index.html';
       var veraBase = lang === 'en' ? '/en/' : '/';
       return veraBase + page + '.html';
     }
@@ -147,7 +148,10 @@
           '<a href="' + href(PAGE, true) + '" class="' + (LANG === 'en' ? 'is-active' : '') + '">EN</a>' +
         '</div>' +
       '</nav>' +
-      '<button class="nav-toggle" id="navToggle" aria-label="Меню"><span></span></button>' +
+      '<button class="nav-toggle" id="navToggle" aria-label="' + menuLabel + '">' +
+        '<span class="nav-toggle-label">' + menuLabel + '</span>' +
+        '<span class="nav-toggle-bars"></span>' +
+      '</button>' +
     '</header>' +
     '<div class="nav-mobile" id="navMobile">' +
       navLinks(true, MOBILE_NAV_ORDER) +
