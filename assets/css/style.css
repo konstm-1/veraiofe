@@ -305,14 +305,20 @@ body[data-page="concerts"] .hero-media img { object-position: center center; }
   color: var(--color-white);
 }
 
+/* The middle bar is the element's own body (a 1px line); the top and
+   bottom bars are its ::before/::after, absolutely positioned against
+   it — .nav-toggle-bars itself must stay position:relative (not
+   absolute) or those pseudo-elements anchor to the nearest positioned
+   ancestor instead, which is the fixed <header>, not this icon. */
 .nav-toggle-bars {
   display: block;
-  width: 26px; height: 18px;
+  width: 26px; height: 1px;
   position: relative;
   flex-shrink: 0;
+  background: var(--color-white);
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
 }
 
-.nav-toggle-bars,
 .nav-toggle-bars::before,
 .nav-toggle-bars::after {
   content: '';
@@ -323,7 +329,6 @@ body[data-page="concerts"] .hero-media img { object-position: center center; }
   transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
 }
 
-.nav-toggle-bars { top: 50%; }
 .nav-toggle-bars::before { top: -8px; }
 .nav-toggle-bars::after { top: 8px; }
 
